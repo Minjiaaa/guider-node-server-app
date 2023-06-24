@@ -1,6 +1,4 @@
 import express from 'express';
-import cors from 'cors'
-import HelloController from "./controllers/hello-controller.js";
 import UserController from "./users/users-controller.js";
 import TuitsController from "./controllers/tuits/tuits-controller.js";
 import session from "express-session";
@@ -36,7 +34,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
-    const allowedOrigins = ["http://localhost:3000"];
+    const allowedOrigins = ["http://localhost:3000", "https://6497420239a5df000890818f--taupe-churros-eca8b0.netlify.app"];
     const origin = req.headers.origin;
 
     if (allowedOrigins.includes(origin)) {
@@ -50,7 +48,6 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 const port = process.env.PORT || 4000;
-HelloController(app);
 UserController(app);
 AuthController(app);
 TuitsController(app);

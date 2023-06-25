@@ -18,6 +18,6 @@ const schema = mongoose.Schema({
     replies: { type: Number, default: 0 },
     retuits: { type: Number, default: 0 },
     created: { type: Date, default: Date.now },
-    author: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "usersModel" },
 }, { collection: 'tuits' });
 export default schema;

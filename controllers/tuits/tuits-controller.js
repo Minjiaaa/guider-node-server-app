@@ -31,9 +31,9 @@ const findTuitsByAuthorId = async (req, res) => {
 };
 const findMyTuits = async (req, res) => {
     const currentUser = req.session["currentUser"];
-    console.log("findMyTuits++++++")
-    console.log(req.session.id)
-    console.log(currentUser)
+    // console.log("findMyTuits++++++")
+    // console.log(req.session.id)
+    // console.log(currentUser)
     if (currentUser) {
 
         const tuits = await tuitsDao.findTuitsByAuthorId(currentUser._id);
@@ -51,9 +51,9 @@ export default (app) => {
     app.get('/api/tuits/:author', findTuitsByAuthorId);
     app.get('/api/myTuits', findMyTuits);
     app.get("/api/login", (req, res) => {
-        console.log("api login ")
-        console.log(req.session)
-        console.log(req.session.id)
+        // console.log("api login ")
+        // console.log(req.session)
+        // console.log(req.session.id)
         var session=req.session;
         if(session.userid){
             res.send("Welcome User <a href=\'/example/logout'>click to logout</a>");

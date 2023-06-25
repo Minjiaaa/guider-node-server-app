@@ -7,9 +7,9 @@ const UserController = (app) => {
     };
 
     const updateUser = async (req, res) => {
-        console.log("--------- updateUser")
-        console.log(req.body)
-        console.log(req.params)
+        // console.log("--------- updateUser")
+        // console.log(req.body)
+        // console.log(req.params)
 
         const id = req.params.uid;
         const status = await usersDao.updateUser(id, req.body);
@@ -26,12 +26,12 @@ const UserController = (app) => {
 
     const findUserById = async (req, res) => {
         const uid = req.params.uid;
-        console.log("------------------findUserById")
-
-        console.log(uid)
+        // console.log("------------------findUserById")
+        //
+        // console.log(uid)
 
         const user = await usersDao.findUserById(uid);
-        console.log(user)
+        // console.log(user)
         res.json(user);
     };
 

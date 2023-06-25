@@ -15,6 +15,7 @@ const usersSchema = new mongoose.Schema({
         default: "Viewer",
     },
     dob: Date,
+    avatar: { type: String, default: "https://i.imgur.com/J23plKz.jpeg" },
     created: { type: Date, default: Date.now },
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'usersModel' }],
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'usersModel' }],

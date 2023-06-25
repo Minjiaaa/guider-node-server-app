@@ -13,7 +13,6 @@ const usersSchema = new mongoose.Schema({
     },
     dob: Date,
     created: { type: Date, default: Date.now },
-
-
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, { collection: "users" });
 export default usersSchema;

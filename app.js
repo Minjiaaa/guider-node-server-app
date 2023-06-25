@@ -8,6 +8,7 @@ import AuthController from "./users/auth-controller.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser"
+import cors from "cors";
 
 dotenv.config();
 
@@ -17,6 +18,13 @@ const oneDay = 1000 * 60 * 60 * 24;
 
 const app = express();
 app.set("trust proxy", 1);
+app.use(
+    cors({
+      credentials: true,
+      // origin: "https://a6--resonant-quokka-5a61c8.netlify.app",
+      origin: "http://localhost:3000",
+    })
+);
 app.use(
     sessions({
         secret: "any string",

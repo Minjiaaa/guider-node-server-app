@@ -37,10 +37,14 @@ const AuthController = (app) => {
         console.log("profile currentUser========")
         console.log(currentUser.username)
         console.log('Profile Session ID:', req.session.id);
-        if (currentUser) {
+        const profileId = req.params.profileId;
+
+        if (!currentUser || (profileId && profileId !== currentUser._id)) {
+            // anonymous users
             res.json(currentUser);
         } else {
-            res.sendStatus(403);
+            // access my own profile page
+            res.json(currentUser);
         }
     };
 
@@ -54,15 +58,18 @@ const AuthController = (app) => {
         const updates = req.body;
         const uid = currentUser._id;
         const updatedUser = await usersDao.updateUser(uid, updates);
+        console.log("------------- update")
+        console.log(updatedUser)
         req.session["currentUser"] = updatedUser;
         res.json(updatedUser);
     }
 
-    app.post("/api/users/register", register);
-    app.post("/api/users/login", login);
-    app.post("/api/users/profile", profile);
-    app.post("/api/users/logout", logout);
-    app.put("/api/users", update);
+    app.post("/api/user/register", register);
+    app.post("/api/user/login", login);
+    app.post("/api/user/profile", profile);
+    // app.get("/api/users/profile/:profileId", profile);
+    app.post("/api/user/logout", logout);
+    app.put('/api/user', update);
     app.get("/example/login", (req, res) => {
         console.log(req.session)
         console.log(req.session.id)

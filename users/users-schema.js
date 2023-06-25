@@ -14,7 +14,7 @@ const usersSchema = new mongoose.Schema({
     dob: Date,
     created: { type: Date, default: Date.now },
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'usersModel' }],
-    followeing: [{ type: mongoose.Schema.Types.ObjectId, ref: 'usersModel' }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'usersModel' }],
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tuitsModel' }],
 }, { collection: "users" });
 export default usersSchema;

@@ -25,9 +25,16 @@ const deleteTuit = async (req, res) => {
     res.json(status);
 }
 
+const searchTuits = async (req, res) => {
+    const query = req.query.q;
+    const tuits = await tuitsDao.searchTuits(query);
+    res.json(tuits);
+};
+
 export default (app) => {
     app.post('/api/tuits', createTuit);
     app.get('/api/tuits', findTuits);
     app.put('/api/tuits/:tid', updateTuit);
     app.delete('/api/tuits/:tid', deleteTuit);
+    app.get('/api/tuits/search', searchTuits);
 }

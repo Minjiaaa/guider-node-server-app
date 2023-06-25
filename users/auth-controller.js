@@ -71,13 +71,19 @@ const AuthController = (app) => {
 
     const update = async (req, res) => {
         const currentUser = req.session["currentUser"];
+        // console.log("---- currentUser --- ")
+        // console.log(currentUser)
         const updates = req.body;
         const uid = currentUser._id;
-        const updatedUser = await usersDao.updateUser(uid, updates);
-        // console.log("------------- update")
-        // console.log(updatedUser)
-        req.session["currentUser"] = updatedUser;
-        res.json(updatedUser);
+        if (uid !== updates._id) {
+            console.error(`Try to update a different user ${updates._id}, current user ${uid}`)
+        }
+        await usersDao.updateUser(uid, updates);
+        const user = await usersDao.findUserById(uid)
+        // console.log("------------- update user")
+        // console.log(user)
+        req.session["currentUser"] = user;
+        res.json(user);
     }
 
     app.post("/api/user/register", register);

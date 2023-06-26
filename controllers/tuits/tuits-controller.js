@@ -42,6 +42,18 @@ const findMyTuits = async (req, res) => {
         res.sendStatus(403);    }
 
 };
+const findOtherTuits = async (req, res) => {
+    console.log("---------findOtherTuits ")
+    const uid = req.params.uid;
+    console.log(uid)
+
+    // console.log("findMyTuits++++++")
+    // console.log(req.session.id)
+    // console.log(currentUser)
+    const tuits = await tuitsDao.findTuitsByAuthorId(uid);
+    console.log(tuits)
+    res.json(tuits);
+};
 
 export default (app) => {
     app.post('/api/tuits', createTuit);
@@ -50,6 +62,7 @@ export default (app) => {
     app.delete('/api/tuits/:tid', deleteTuit);
     app.get('/api/tuits/:author', findTuitsByAuthorId);
     app.get('/api/myTuits', findMyTuits);
+    app.get('/api/myTuits/:uid', findOtherTuits);
     app.get("/api/login", (req, res) => {
         // console.log("api login ")
         // console.log(req.session)

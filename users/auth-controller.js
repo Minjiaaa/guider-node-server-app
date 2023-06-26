@@ -15,6 +15,7 @@ const AuthController = (app) => {
     const login = async (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
+
         if (username && password) {
             const user = await usersDao.findUserByCredentials(username, password);
             if (user) {

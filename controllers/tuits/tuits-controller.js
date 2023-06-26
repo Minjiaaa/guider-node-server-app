@@ -55,6 +55,12 @@ const findOtherTuits = async (req, res) => {
     res.json(tuits);
 };
 
+const searchTuits = async (req, res) => {
+    const query = req.query.q;
+    const tuits = await tuitsDao.searchTuits(query);
+    res.json(tuits);
+};
+
 export default (app) => {
     app.post('/api/tuits', createTuit);
     app.get('/api/tuits', findTuits);
@@ -73,4 +79,5 @@ export default (app) => {
         }else
             res.sendFile('/Users/zenglin/webdev-server-project/users/index.html')
     });
+    app.get('/api/tuits/search', searchTuits);
 }

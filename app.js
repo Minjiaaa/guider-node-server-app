@@ -10,7 +10,6 @@ import cookieParser from "cookie-parser"
 
 dotenv.config();
 const CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
-console.log(CONNECTION_STRING)
 const oneDay = 1000 * 60 * 60 * 24;
 
 const app = express();

@@ -61,7 +61,6 @@ export default (app) => {
     app.get('/api/myTuits', findMyTuits);
     app.get('/api/myTuits/:uid', findOtherTuits);
     app.get("/api/login", (req, res) => {
-        // console.log("api login ")
         var session = req.session;
         if (session.userid) {
             res.send("Welcome User <a href=\'/example/logout'>click to logout</a>");

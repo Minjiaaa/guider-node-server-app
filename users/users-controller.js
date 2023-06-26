@@ -8,7 +8,6 @@ const UserController = (app) => {
 
     const updateOtherUser = async (req, res) => {
         const updates = req.body;
-        console.log("---- update following ----")
         const user = await usersDao.findUserById(updates._id)
         res.json(user);
     }

@@ -24,6 +24,36 @@ const deleteTuit = async (req, res) => {
     const status = await tuitsDao.deleteTuit(tuitdIdToDelete);
     res.json(status);
 }
+const findTuitsByAuthorId = async (req, res) => {
+    const author = req.params.author;
+    const tuits = await tuitsDao.findTuitsByAuthorId(author);
+    res.json(tuits);
+};
+const findMyTuits = async (req, res) => {
+    const currentUser = req.session["currentUser"];
+    // console.log("findMyTuits++++++")
+    // console.log(req.session.id)
+    // console.log(currentUser)
+    if (currentUser) {
+
+        const tuits = await tuitsDao.findTuitsByAuthorId(currentUser._id);
+        res.json(tuits);
+    } else {
+        res.sendStatus(403);    }
+
+};
+const findOtherTuits = async (req, res) => {
+    console.log("---------findOtherTuits ")
+    const uid = req.params.uid;
+    console.log(uid)
+
+    // console.log("findMyTuits++++++")
+    // console.log(req.session.id)
+    // console.log(currentUser)
+    const tuits = await tuitsDao.findTuitsByAuthorId(uid);
+    console.log(tuits)
+    res.json(tuits);
+};
 
 const searchTuits = async (req, res) => {
     const query = req.query.q;
@@ -36,5 +66,18 @@ export default (app) => {
     app.get('/api/tuits', findTuits);
     app.put('/api/tuits/:tid', updateTuit);
     app.delete('/api/tuits/:tid', deleteTuit);
+    app.get('/api/tuits/:author', findTuitsByAuthorId);
+    app.get('/api/myTuits', findMyTuits);
+    app.get('/api/myTuits/:uid', findOtherTuits);
+    app.get("/api/login", (req, res) => {
+        // console.log("api login ")
+        // console.log(req.session)
+        // console.log(req.session.id)
+        var session=req.session;
+        if(session.userid){
+            res.send("Welcome User <a href=\'/example/logout'>click to logout</a>");
+        }else
+            res.sendFile('/Users/zenglin/webdev-server-project/users/index.html')
+    });
     app.get('/api/tuits/search', searchTuits);
 }

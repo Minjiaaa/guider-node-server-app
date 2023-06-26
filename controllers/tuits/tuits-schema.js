@@ -17,5 +17,7 @@ const schema = mongoose.Schema({
     dislikes: { type: Number, default: 0 },
     replies: { type: Number, default: 0 },
     retuits: { type: Number, default: 0 },
+    created: { type: Date, default: Date.now },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "usersModel" },
 }, { collection: 'tuits' });
 export default schema;

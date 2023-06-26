@@ -1,27 +1,41 @@
 import express from 'express';
 import UserController from "./users/users-controller.js";
 import TuitsController from "./controllers/tuits/tuits-controller.js";
-import session from "express-session";
+import sessions from "express-session";
+
 import MongoStore from 'connect-mongo'
 import AuthController from "./users/auth-controller.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser"
+import cors from "cors";
 
 dotenv.config();
 
-const CONNECTION_STRING = process.env.DB_CONNECTION_STRING
+// const CONNECTION_STRING = process.env.DB_CONNECTION_STRING
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://127.0.0.1:27017/tuiter';
+const oneDay = 1000 * 60 * 60 * 24;
 
 const app = express();
 app.set("trust proxy", 1);
 app.use(
-    session({
+    cors({
+      credentials: true,
+      // origin: "https://a6--resonant-quokka-5a61c8.netlify.app",
+      origin: "http://localhost:3000",
+    })
+);
+app.use(
+    sessions({
         secret: "any string",
         resave: false,
         proxy: true,
-        saveUninitialized: false,
+        // saveUninitialized: false,
+        saveUninitialized:true,
         cookie: {
-            sameSite: "none",
-            secure: true,
+            // sameSite: "none",
+            // secure: false,
+            maxAge: oneDay,
         },
         store: MongoStore.create({
             clientPromise: mongoose.connect(CONNECTION_STRING, {
@@ -47,6 +61,10 @@ app.use((req, res, next) => {
     next();
 });
 app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+// app.use(express.static(__dirname));
+
 const port = process.env.PORT || 4000;
 UserController(app);
 AuthController(app);

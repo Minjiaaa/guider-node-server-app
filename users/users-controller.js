@@ -6,17 +6,17 @@ const UserController = (app) => {
         res.json(newUser);
     };
 
-    const updateUser = async (req, res) => {
-        // console.log("--------- updateUser")
-        // console.log(req.body)
-        // console.log(req.params)
-
-        const id = req.params.uid;
-        const status = await usersDao.updateUser(id, req.body);
-        const user = await usersDao.findUserById(id);
-        req.session["currentUser"] = user;
-        res.json(status);
-    };
+    const updateOtherUser = async (req, res) => {
+        const updates = req.body;
+        // console.log("---- update following ----")
+        // console.log(updates)
+        const updateResult = await usersDao.updateUser(updates._id, updates);
+        // console.log(updateResult)
+        const user = await usersDao.findUserById(updates._id)
+        // console.log("------------- update user")
+        // console.log(user)
+        res.json(user);
+    }
 
     const deleteUser = async (req, res) => {
         const id = req.params.id;
@@ -61,7 +61,7 @@ const UserController = (app) => {
     app.get('/api/users/:uid', findUserById);
     app.post('/api/users', createUser);
     app.delete('/api/users/:uid', deleteUser);
-    app.put('/api/users/:uid', updateUser);
+    app.put('/api/otheruser', updateOtherUser);
 }
 
 export default UserController

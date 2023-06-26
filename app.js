@@ -9,7 +9,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser"
 
 dotenv.config();
-const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://127.0.0.1:27017/tuiter';
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
+console.log(CONNECTION_STRING)
 const oneDay = 1000 * 60 * 60 * 24;
 
 const app = express();
@@ -19,8 +20,8 @@ app.use(
         secret: "any string",
         resave: false,
         proxy: true,
-        // saveUninitialized: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
+        // saveUninitialized: true,
         cookie: {
             sameSite: "none",
             secure: false,

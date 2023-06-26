@@ -10,6 +10,7 @@ const UserController = (app) => {
         const updates = req.body;
         console.log("---- update following ----")
         console.log(updates)
+        console.log(updates._id)
         const updateResult = await usersDao.updateUser(updates._id, updates);
         console.log(updateResult)
         const user = await usersDao.findUserById(updates._id)

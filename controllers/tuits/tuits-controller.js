@@ -2,7 +2,7 @@ import * as tuitsDao from './tuits-dao.js'
 
 const createTuit = async (req, res) => {
     const newTuit = req.body;
-    newTuit.username = req.session["currentUser"]
+    newTuit.username = req.session["currentUser"].username;
     const insertedTuit = await tuitsDao.createTuit(newTuit);
     res.json(insertedTuit);
 }
@@ -38,7 +38,6 @@ const findMyTuits = async (req, res) => {
     } else {
         res.sendStatus(403);
     }
-
 };
 const findOtherTuits = async (req, res) => {
     const uid = req.params.uid;
@@ -60,12 +59,6 @@ export default (app) => {
     app.get('/api/tuits/:author', findTuitsByAuthorId);
     app.get('/api/myTuits', findMyTuits);
     app.get('/api/myTuits/:uid', findOtherTuits);
-    app.get("/api/login", (req, res) => {
-        var session = req.session;
-        if (session.userid) {
-            res.send("Welcome User <a href=\'/example/logout'>click to logout</a>");
-        } else
-            res.sendFile('/Users/zenglin/webdev-server-project/users/index.html')
-    });
+    app.get('/api/tuits/search', searchTuits);
     app.get('/api/search', searchTuits);
 }

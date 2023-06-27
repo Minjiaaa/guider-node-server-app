@@ -70,6 +70,8 @@ const AuthController = (app) => {
         const uid = currentUser._id;
         if (uid !== updates._id) {
             console.error(`Try to update a different user ${updates._id}, current user ${uid}`)
+            res.json(currentUser);
+            return;
         }
         await usersDao.updateUser(uid, updates);
         const user = await usersDao.findUserById(uid)
@@ -83,22 +85,6 @@ const AuthController = (app) => {
     app.get("/api/user/profile/:profileId", otherProfile);
     app.post("/api/user/logout", logout);
     app.put('/api/user', update);
-    app.get("/example/login", (req, res) => {
-        var session = req.session;
-        if (session.userid) {
-            res.send("Welcome User <a href=\'/example/logout'>click to logout</a>");
-        } else
-            res.sendFile('/Users/zenglin/webdev-server-project/users/index.html')
-    });
-    app.post("/example/user", (req, res) => {
-        var session = req.session;
-        session.userid = req.body.username;
-        res.send(`Hey there, welcome <a href=\'/example/logout'>click to logout</a>`);
-    });
-    app.get("/example/logout", (req, res) => {
-        req.session.destroy();
-        res.redirect('/example/login');
-    });
 };
 
 export default AuthController;

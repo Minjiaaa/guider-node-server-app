@@ -2,7 +2,7 @@ import * as tuitsDao from './tuits-dao.js'
 
 const createTuit = async (req, res) => {
     const newTuit = req.body;
-    newTuit.username = req.session["currentUser"]
+    newTuit.username = req.session["currentUser"].username;
     const insertedTuit = await tuitsDao.createTuit(newTuit);
     res.json(insertedTuit);
 }
@@ -31,9 +31,6 @@ const findTuitsByAuthorId = async (req, res) => {
 };
 const findMyTuits = async (req, res) => {
     const currentUser = req.session["currentUser"];
-    // console.log("findMyTuits++++++")
-    // console.log(req.session.id)
-    // console.log(currentUser)
     if (currentUser) {
 
         const tuits = await tuitsDao.findTuitsByAuthorId(currentUser._id);
@@ -43,15 +40,8 @@ const findMyTuits = async (req, res) => {
 
 };
 const findOtherTuits = async (req, res) => {
-    console.log("---------findOtherTuits ")
     const uid = req.params.uid;
-    console.log(uid)
-
-    // console.log("findMyTuits++++++")
-    // console.log(req.session.id)
-    // console.log(currentUser)
     const tuits = await tuitsDao.findTuitsByAuthorId(uid);
-    console.log(tuits)
     res.json(tuits);
 };
 
@@ -63,14 +53,4 @@ export default (app) => {
     app.get('/api/tuits/:author', findTuitsByAuthorId);
     app.get('/api/myTuits', findMyTuits);
     app.get('/api/myTuits/:uid', findOtherTuits);
-    app.get("/api/login", (req, res) => {
-        // console.log("api login ")
-        // console.log(req.session)
-        // console.log(req.session.id)
-        var session=req.session;
-        if(session.userid){
-            res.send("Welcome User <a href=\'/example/logout'>click to logout</a>");
-        }else
-            res.sendFile('/Users/zenglin/webdev-server-project/users/index.html')
-    });
 }

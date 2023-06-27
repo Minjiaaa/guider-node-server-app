@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 const schema = mongoose.Schema({
-    tuit: { type: String, default: '' },
+    tuit: { type: String, default: '', index: 'text' },
     username: { type: String, default: 'Blahaj' },
     handle: {
         type: String,

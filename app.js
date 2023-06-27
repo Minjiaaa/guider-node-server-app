@@ -22,8 +22,8 @@ app.use(
         saveUninitialized: false,
         // saveUninitialized: true,
         cookie: {
-            sameSite: "none",
-            secure: false,
+            // sameSite: "none",
+            // secure: false,
             maxAge: oneDay,
         },
         store: MongoStore.create({

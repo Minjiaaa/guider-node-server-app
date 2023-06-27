@@ -36,8 +36,8 @@ const findMyTuits = async (req, res) => {
         const tuits = await tuitsDao.findTuitsByAuthorId(currentUser._id);
         res.json(tuits);
     } else {
-        res.sendStatus(403);    }
-
+        res.sendStatus(403);
+    }
 };
 const findOtherTuits = async (req, res) => {
     const uid = req.params.uid;
@@ -60,4 +60,5 @@ export default (app) => {
     app.get('/api/myTuits', findMyTuits);
     app.get('/api/myTuits/:uid', findOtherTuits);
     app.get('/api/tuits/search', searchTuits);
+    app.get('/api/search', searchTuits);
 }

@@ -54,7 +54,7 @@ const AuthController = (app) => {
         if (!otherUser) {
             res.sendStatus(404);
         } else {
-            const newUser = {...otherUser, email: "", phone: ""};
+            const newUser = { ...otherUser, email: "", phone: "" };
             res.json(newUser);
         }
     };

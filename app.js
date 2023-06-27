@@ -2,39 +2,28 @@ import express from 'express';
 import UserController from "./users/users-controller.js";
 import TuitsController from "./controllers/tuits/tuits-controller.js";
 import sessions from "express-session";
-
 import MongoStore from 'connect-mongo'
 import AuthController from "./users/auth-controller.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser"
-import cors from "cors";
 
 dotenv.config();
-
-// const CONNECTION_STRING = process.env.DB_CONNECTION_STRING
-const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://127.0.0.1:27017/tuiter';
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
 const oneDay = 1000 * 60 * 60 * 24;
 
 const app = express();
 app.set("trust proxy", 1);
 app.use(
-    cors({
-      credentials: true,
-      // origin: "https://a6--resonant-quokka-5a61c8.netlify.app",
-      origin: "http://localhost:3000",
-    })
-);
-app.use(
     sessions({
         secret: "any string",
         resave: false,
         proxy: true,
-        // saveUninitialized: false,
-        saveUninitialized:true,
+        saveUninitialized: false,
+        // saveUninitialized: true,
         cookie: {
-            // sameSite: "none",
-            // secure: false,
+            sameSite: "none",
+            secure: false,
             maxAge: oneDay,
         },
         store: MongoStore.create({
@@ -43,7 +32,6 @@ app.use(
                 useUnifiedTopology: true,
             }).then(m => m.connection.getClient()),
         })
-
     })
 );
 
